@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default class NewDeck extends Component {
-    render() {
-        return (
-            <SafeAreaView>
-                <Text>Quiz</Text>
-            </SafeAreaView>
-        )
-    }
+export default function NewDeck({navigation}) {
+    return (
+        <SafeAreaView>
+            <Text>Quiz</Text>
+            <Button
+                title="Back"
+                onPress={() => navigation.goBack()}
+            />
+        </SafeAreaView>
+    )
 }

@@ -7,11 +7,11 @@ export default function Details({navigation}) {
             <Text>Details</Text>
             <Button
                 title="Add question"
-                onPress={() => navigation.navigate('Add Question')}
+                onPress={() => navigation.push('Add Question')}
             />
             <Button
                 title="Quiz"
-                onPress={() => navigation.navigate('Quiz')}
+                onPress={() => navigation.push('Quiz')}
             />
         </View>
     )

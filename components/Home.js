@@ -18,7 +18,7 @@ export default function Home() {
                     iconName = focused
                     ? 'cards'
                     : 'cards-outline';
-                } else if (route.name === 'NewDeck') {
+                } else if (route.name === 'New Deck') {
                     iconName = focused ? 'plus-circle' : 'plus-circle-outline';
                 }
     
@@ -31,7 +31,7 @@ export default function Home() {
             }}
           >
             <HomeTabs.Screen name="Decks" component={DeckList} />
-            <HomeTabs.Screen name="NewDeck" component={NewDeck} />
+            <HomeTabs.Screen name="New Deck" component={NewDeck} />
         </HomeTabs.Navigator>
     );
   }
