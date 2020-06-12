@@ -15,13 +15,11 @@ class DeckList extends Component {
     }
     
     openDetails = (title) => {
-        console.log(title)
         this.props.navigation.navigate('Details', { deckId: title })
     }
 
 
     render() {
-        console.log("Decklist props: ", this.props)
         return (
             <SafeAreaView>
                 <Text>DeckList</Text>
@@ -30,11 +28,6 @@ class DeckList extends Component {
                     renderItem={({ item }) => <DeckListItem id={item} openDetails={this.openDetails}/>}
                     keyExtractor={item => item}
                 />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details', { test: "Test val"})}
-                />
-
             </SafeAreaView>
         )
     }

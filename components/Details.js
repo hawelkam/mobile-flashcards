@@ -6,13 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 class Details extends Component {
     render() {
-        console.log("Detailsjs props", this.props)
+        const { navigation } = this.props
         return (
             <SafeAreaView>
-                <Text>Details of {this.props.route.params.deckId}</Text>
+                <Text>{this.props.deck.title}</Text>
+                <Text>{this.props.deck.questions.length} questions</Text>
                 <Button
                     title="Add question"
-                    onPress={() => navigation.push('Add Question')}
+                    onPress={() => navigation.navigate('Add Question')}
                 />
                 <Button
                     title="Quiz"
@@ -23,4 +24,10 @@ class Details extends Component {
     }
 }
 
-export default connect()(Details)
+function mapStateToProps(state, { route }) {
+    return {
+        deck: state[route.params.deckId]
+    }
+}
+
+export default connect(mapStateToProps)(Details)
