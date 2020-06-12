@@ -3,19 +3,35 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import DeckList from './DeckList'
 import NewDeck from './NewDeck'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 const HomeTabs = createBottomTabNavigator()
 
 export default function Home() {
     return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                <HomeTabs.Navigator>
-                    <HomeTabs.Screen name="Decks" component={DeckList} />
-                    <HomeTabs.Screen name="NewDeck" component={NewDeck} />
-                </HomeTabs.Navigator>
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <HomeTabs.Navigator 
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
+    
+                if (route.name === 'Decks') {
+                    iconName = focused
+                    ? 'cards'
+                    : 'cards-outline';
+                } else if (route.name === 'NewDeck') {
+                    iconName = focused ? 'plus-circle' : 'plus-circle-outline';
+                }
+    
+                return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+                },
+            })}
+            tabBarOptions={{
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+            }}
+          >
+            <HomeTabs.Screen name="Decks" component={DeckList} />
+            <HomeTabs.Screen name="NewDeck" component={NewDeck} />
+        </HomeTabs.Navigator>
     );
   }
