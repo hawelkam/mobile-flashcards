@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity, PointPropType } from 'react-native'
 
 class DeckListItem extends Component {
+
     render() {
         const { deck } = this.props
+        console.log("Item props: ", this.props)
         return (
-            <View style={styles.listItem}>
+            <TouchableOpacity style={styles.listItem} onPress={() => this.props.openDetails(deck.title)}>
               <Text>{deck.title}</Text>
               <Text>{deck.questions.length} questions</Text>
-            </View>
+            </TouchableOpacity>
           );
     }
   }
