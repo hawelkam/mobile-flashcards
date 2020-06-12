@@ -6,7 +6,6 @@ class DeckListItem extends Component {
 
     render() {
         const { deck } = this.props
-        console.log("Item props: ", this.props)
         return (
             <TouchableOpacity style={styles.listItem} onPress={() => this.props.openDetails(deck.title)}>
               <Text>{deck.title}</Text>

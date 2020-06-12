@@ -18,7 +18,7 @@ export function addDeck (deck) {
 
 export function addQuestion ( {deckId, question}) {
     return {
-        ADD_QUESTION,
+        type: ADD_QUESTION,
         deckId,
         question
     }

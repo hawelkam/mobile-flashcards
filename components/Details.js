@@ -2,9 +2,27 @@ import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { addQuestion } from '../actions/index'
+import { submitDeck } from '../utils/api'
 
 
 class Details extends Component {
+    handleSubmit = (q, a) => {
+        const { deck, dispatch, navigation } = this.props
+        const newQuestion = {
+            question: q,
+            answer: a
+        }
+        dispatch(addQuestion({
+            deckId: deck.title,
+            question: newQuestion
+        }))
+
+        submitDeck({deck, key: deck.title}).then(() => {
+            this.props.navigation.navigate('Details', { deckId: deck.title })
+        })
+    }
+
     render() {
         const { navigation } = this.props
         return (
@@ -13,7 +31,7 @@ class Details extends Component {
                 <Text>{this.props.deck.questions.length} questions</Text>
                 <Button
                     title="Add question"
-                    onPress={() => navigation.navigate('Add Question')}
+                    onPress={() => navigation.navigate('Add Question', { handleSubmit: this.handleSubmit })}
                 />
                 <Button
                     title="Quiz"
