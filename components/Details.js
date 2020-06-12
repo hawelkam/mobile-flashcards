@@ -35,7 +35,7 @@ class Details extends Component {
                 />
                 <Button
                     title="Quiz"
-                    onPress={() => navigation.push('Quiz')}
+                    onPress={() => navigation.push('Quiz', { questions: this.props.deck.questions })}
                 />
             </SafeAreaView>
         )
