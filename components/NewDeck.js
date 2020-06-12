@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Text, TextInput } from 'react-native'
+import { Button, Text, TextInput, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions/index'
 import { submitDeck } from '../utils/api'
+import { color } from 'react-native-reanimated'
 
 class NewDeck extends Component {
     state = {
@@ -34,9 +35,8 @@ class NewDeck extends Component {
 
     render() {
         return (
-            <SafeAreaView>
-                <Text>NewDeck</Text>
-                <TextInput value={this.state.deckName} onChangeText={this.handleTextChange} />
+            <SafeAreaView style={styles.container}>
+                <TextInput style={styles.nameInput} value={this.state.deckName} onChangeText={this.handleTextChange} placeholder="Enter deck name..."/>
                 <Button
                     title="Add new deck"
                     onPress={this.handleSubmit}
@@ -45,5 +45,21 @@ class NewDeck extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    nameInput: {
+        width: 300,
+        borderBottomColor: 'black',
+        borderBottomWidth: 2,
+        fontSize: 24,
+        margin: 10,
+    }
+})
+
 
 export default connect()(NewDeck)

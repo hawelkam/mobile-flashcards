@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
+import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default class Quiz extends Component {
@@ -8,17 +8,14 @@ export default class Quiz extends Component {
         currentQuestion: 1,
         numberOfQuestions: 0,
         correctAnswers: 0,
-        noQuestionsPrompt: false
+        noQuestionsPrompt: true
     }
 
     componentDidMount() {
         const { questions } = this.props.route.params
-        if (questions.length === 0) {
+        if (questions.length !== 0) {
             this.setState(() => ({
-                noQuestionsPrompt: true
-            }))
-        } else {
-            this.setState(() => ({
+                noQuestionsPrompt: false,
                 numberOfQuestions: questions.length
             }))
         }
@@ -56,38 +53,106 @@ export default class Quiz extends Component {
 
     render() {
         const { questions } = this.props.route.params
-
         if (this.state.noQuestionsPrompt) {
             return (
-                <SafeAreaView>
-                <Text>There are no questions in this deck!</Text>
+                <SafeAreaView style={styles.container}>
+                <Text style={styles.prompt}>There are no questions in this deck!</Text>
                 <Button
                     title="Back"
                     onPress={() => this.props.navigation.goBack()}
                 />
             </SafeAreaView>)
+        } else {
+            return this.state.currentQuestion === 'done' ? ( 
+                <SafeAreaView style={[styles.container, styles.question]}>
+                    <View>
+                        <Text style={{fontSize: 40}}>Quiz results</Text>
+                        <Text style={styles.prompt}>Your score is {this.state.correctAnswers / this.state.numberOfQuestions * 100}%</Text>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={[styles.answerBtn, styles.correctBtn]}
+                            onPress={this.restart}><Text style={styles.btnText}>Start over</Text></TouchableOpacity> 
+                        <TouchableOpacity style={[styles.answerBtn, styles.returnBtn]}
+                            onPress={() => this.props.navigation.goBack()}><Text style={styles.btnText}>Return to Deck View</Text></TouchableOpacity>
+                    </View> 
+                </SafeAreaView>
+            ) : (
+                <SafeAreaView style={[styles.container, styles.question]}>
+                    <Text style={styles.prompt}>{(questions.length - this.state.currentQuestion) === 0 ? ('Last question!') : (`Remaining questions: ${questions.length - this.state.currentQuestion}`)} </Text>
+                    <View style={styles.questionCard}>
+                        <Text style={styles.questionTxt}>{this.state.showAnswer ? (questions[this.state.currentQuestion - 1].answer) : (questions[this.state.currentQuestion - 1].question)}</Text>
+                        <TouchableOpacity style={styles.showAnswerBtn}
+                            onPress={this.toggleAnswer}><Text>{this.state.showAnswer ? 'Hide answer' : 'Show answer'}</Text></TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={[styles.answerBtn, styles.correctBtn]}
+                            onPress={this.handleCorrect}><Text style={styles.btnText}>Correct</Text></TouchableOpacity>
+                        <TouchableOpacity style={[styles.answerBtn, styles.incorrectBtn]}
+                            onPress={this.handleIncorrect}><Text style={styles.btnText}>Incorrect</Text></TouchableOpacity> 
+                    </View>
+                </SafeAreaView>
+            )
         }
-
-        return this.state.currentQuestion === 'done' ? ( 
-            <SafeAreaView>
-                <Text>RESULTS</Text>
-                <Text>Your score is {this.state.correctAnswers / this.state.numberOfQuestions * 100}%</Text>
-                <TouchableOpacity
-                    onPress={this.restart}><Text>Start over</Text></TouchableOpacity> 
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}><Text>Return to Deck View</Text></TouchableOpacity> 
-            </SafeAreaView>
-        ) : (
-            <SafeAreaView>
-                <Text>{(questions.length - this.state.currentQuestion) === 0 ? ('Last question!') : (`Remaining questions: ${questions.length - this.state.currentQuestion}`)} </Text>
-                <Text>{this.state.showAnswer ? (questions[this.state.currentQuestion - 1].answer) : (questions[this.state.currentQuestion - 1].question)}</Text>
-                <TouchableOpacity
-                    onPress={this.toggleAnswer}><Text>{this.state.showAnswer ? 'Hide answer' : 'Show answer'}</Text></TouchableOpacity>
-                <TouchableOpacity
-                    onPress={this.handleCorrect}><Text>Correct</Text></TouchableOpacity>
-                <TouchableOpacity
-                    onPress={this.handleIncorrect}><Text>Incorrect</Text></TouchableOpacity> 
-            </SafeAreaView>
-        )
     }
 }
+
+const styles = StyleSheet.create({
+    prompt: {
+        fontSize: 24,
+    },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    question: {
+        justifyContent: "space-between"
+    },
+    questionTxt: {
+        fontSize: 40,
+        textAlign: "center"
+    },
+    questionCard: {
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: 15,
+        borderWidth: 3,
+        borderColor: 'black',
+        backgroundColor: 'white',
+        shadowColor: "#000",
+        width: 300,
+        height: 300,
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+    showAnswerBtn: {
+        marginBottom: 10
+    },
+    answerBtn : {
+        fontSize: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 10
+    },
+    correctBtn : {
+        backgroundColor: 'green',
+    },
+    incorrectBtn : {
+        backgroundColor: 'red',
+    },
+    returnBtn : {
+        backgroundColor: 'grey',
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 20
+    }
+})

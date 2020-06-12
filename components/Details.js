@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { addQuestion } from '../actions/index'
@@ -30,20 +30,52 @@ class Details extends Component {
     render() {
         const { navigation } = this.props
         return (
-            <SafeAreaView>
-                <Text>{this.props.deck.questions.length} questions</Text>
-                <Button
-                    title="Add question"
-                    onPress={() => navigation.navigate('Add Question', { handleSubmit: this.handleSubmit })}
-                />
-                <Button
-                    title="Quiz"
-                    onPress={() => navigation.push('Quiz', { questions: this.props.deck.questions })}
-                />
+            <SafeAreaView style={styles.container}>
+                <Text style={styles.questions}>{this.props.deck.questions.length} questions in this deck</Text>
+                <View>
+                    <TouchableOpacity style={[styles.detailsBtn, styles.addBtn]}
+                        onPress={() => navigation.navigate('Add Question', { handleSubmit: this.handleSubmit })}
+                    ><Text style={styles.addText}>Add question</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.detailsBtn, styles.quizBtn]}
+                        onPress={() => navigation.push('Quiz', { questions: this.props.deck.questions })}
+                    ><Text style={styles.addText}>Quiz</Text></TouchableOpacity>
+                </View>
             </SafeAreaView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    questions: {
+        fontSize: 24,
+    },
+    container: {
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    detailsBtn : {
+        fontSize: 20,
+        backgroundColor: 'green',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    addBtn: {
+        backgroundColor: 'green',
+        marginBottom: 10
+    },
+    quizBtn: {
+        backgroundColor: 'blue',
+    },
+    addText: {
+        color: 'white',
+        fontSize: 20
+    }
+})
+
 
 function mapStateToProps(state, { route }) {
     return {
