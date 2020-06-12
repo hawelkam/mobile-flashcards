@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'
 import { receiveDecks } from '../actions/index'
+import DeckListItem from './DeckListItem'
 
 class DeckList extends Component {
     componentDidMount() {
@@ -17,13 +18,16 @@ class DeckList extends Component {
         return (
             <SafeAreaView>
                 <Text>DeckList</Text>
-                {this.props.deckIds.map((id) => (
-                    <Text key={id}>{id}</Text>    
-                ))}
+                <FlatList
+                    data={this.props.deckIds}
+                    renderItem={({ item }) => <DeckListItem id={item} />}
+                    keyExtractor={item => item}
+                />
                 <Button
                     title="Go to Details"
                     onPress={() => this.props.navigation.navigate('DeckDetails')}
                 />
+
             </SafeAreaView>
         )
     }
