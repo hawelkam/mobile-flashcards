@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { clearLocalNotifications, setLocalNotification } from '../utils/helpers'
 
 export default class Quiz extends Component {
     state = {
@@ -19,6 +20,9 @@ export default class Quiz extends Component {
                 numberOfQuestions: questions.length
             }))
         }
+
+        clearLocalNotifications()
+        setLocalNotification()
     }
 
     toggleAnswer = () => {
