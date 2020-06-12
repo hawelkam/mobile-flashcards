@@ -7,6 +7,10 @@ import { submitDeck } from '../utils/api'
 
 
 class Details extends Component {
+    componentDidMount() {
+        this.props.navigation.setOptions({ title: this.props.deck.title })
+    }
+    
     handleSubmit = (q, a) => {
         const { deck, dispatch, navigation } = this.props
         const newQuestion = {
@@ -19,7 +23,7 @@ class Details extends Component {
         }))
 
         submitDeck({deck, key: deck.title}).then(() => {
-            this.props.navigation.navigate('Details', { deckId: deck.title })
+            navigation.navigate('Details', { deckId: deck.title })
         })
     }
 
@@ -27,7 +31,6 @@ class Details extends Component {
         const { navigation } = this.props
         return (
             <SafeAreaView>
-                <Text>{this.props.deck.title}</Text>
                 <Text>{this.props.deck.questions.length} questions</Text>
                 <Button
                     title="Add question"

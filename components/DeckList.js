@@ -22,7 +22,6 @@ class DeckList extends Component {
     render() {
         return (
             <SafeAreaView>
-                <Text>DeckList</Text>
                 <FlatList
                     data={this.props.deckIds}
                     renderItem={({ item }) => <DeckListItem id={item} openDetails={this.openDetails}/>}

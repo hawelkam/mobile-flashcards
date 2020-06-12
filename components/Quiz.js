@@ -31,13 +31,11 @@ export default class Quiz extends Component {
     }
 
     handleCorrect = () => {
-        console.log(this.state)
         this.setState(() => ({
             correctAnswers: this.state.correctAnswers + 1,
             showAnswer: false,
             currentQuestion: this.state.currentQuestion === this.state.numberOfQuestions ? 'done' : (this.state.currentQuestion + 1)
         }))
-        console.log(this.state)
     }
 
     handleIncorrect = () => {

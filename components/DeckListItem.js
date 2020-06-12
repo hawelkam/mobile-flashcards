@@ -8,7 +8,7 @@ class DeckListItem extends Component {
         const { deck } = this.props
         return (
             <TouchableOpacity style={styles.listItem} onPress={() => this.props.openDetails(deck.title)}>
-              <Text>{deck.title}</Text>
+              <Text style={styles.deckName}>{deck.title}</Text>
               <Text>{deck.questions.length} questions</Text>
             </TouchableOpacity>
           );
@@ -21,6 +21,12 @@ class DeckListItem extends Component {
           padding: 10,
           borderColor: 'black',
           borderBottomWidth: 2,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+      },
+      deckName: {
+          fontSize: 30
       }
   })
 
