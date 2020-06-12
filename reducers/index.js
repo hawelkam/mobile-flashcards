@@ -15,9 +15,9 @@ function entries (state = {}, action) {
         case ADD_QUESTION:
             return {
                 ...state,
-                [action.deck]: {
-                    ...state[action.deck],
-                    // ADD question to array
+                [action.deckId]: {
+                    ...state[action.deckId],
+                    questions: state[action.deckId].questions.concat([action.question])
                 }
             }
         default:

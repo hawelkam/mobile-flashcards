@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { TextInput, Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { connect } from 'react-redux'
 
-export default class NewDeck extends Component {
+export default class AddQuestion extends Component {
 
     state = {
         question: '',
@@ -49,3 +50,5 @@ export default class NewDeck extends Component {
         )
     }
 }
+
+ 

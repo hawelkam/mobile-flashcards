@@ -15,3 +15,11 @@ export function addDeck (deck) {
         deck
     }
 }
+
+export function addQuestion ( {deckId, question}) {
+    return {
+        ADD_QUESTION,
+        deckId,
+        question
+    }
+}
