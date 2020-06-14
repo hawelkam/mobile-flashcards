@@ -37,7 +37,7 @@ class NewDeck extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <TextInput style={styles.nameInput} value={this.state.deckName} onChangeText={this.handleTextChange} placeholder="Enter deck name..."/>
-                <Button
+                <Button disabled={this.state.deckName === ''}
                     title="Add new deck"
                     onPress={this.handleSubmit}
                 />

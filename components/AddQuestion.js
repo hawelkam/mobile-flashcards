@@ -19,13 +19,17 @@ export default class AddQuestion extends Component {
             answer: input
         }))
     }
+
+    validateInput = () => (
+        this.state.question === '' || this.state.answer === '' || this.state.question === this.state.answer
+    )
  
     render() {
         return (
             <SafeAreaView style={styles.container}>
                 <TextInput style={styles.txtInput} value={this.state.question} onChangeText={this.handleQuestionChange} placeholder="Question"/>
                 <TextInput style={styles.txtInput} value={this.state.answer} onChangeText={this.handleAnswerChange} placeholder="Answer"/>
-                <TouchableOpacity style={styles.addBtn}
+                <TouchableOpacity style={styles.addBtn} disabled={this.validateInput()}
                     onPress={() => {
                         this.props.route.params.handleSubmit(this.state.question, this.state.answer)
                         this.setState(() => ({
